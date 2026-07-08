@@ -33,6 +33,9 @@ public class Conteudo {
     @Column(name = "video_url")
     private String videoUrl;
 
+    @Column(name = "material_url")
+    private String materialUrl;
+
     @Builder.Default
     private Integer ordem = 0;
 

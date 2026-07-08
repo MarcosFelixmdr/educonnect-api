@@ -44,9 +44,7 @@ public class Questao {
     @Column(name = "opcao_d", nullable = false)
     private String opcaoD;
 
-    /**
-     * Resposta correta: "A", "B", "C" ou "D"
-     */
+    
     @NotBlank
     @Column(name = "resposta_correta", nullable = false, length = 1)
     private String respostaCorreta;

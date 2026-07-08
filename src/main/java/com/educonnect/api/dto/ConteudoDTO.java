@@ -22,6 +22,7 @@ public class ConteudoDTO {
 
     private String descricao;
     private String videoUrl;
+    private String materialUrl;
     private Integer ordem;
 
     @NotNull(message = "Curso é obrigatório")

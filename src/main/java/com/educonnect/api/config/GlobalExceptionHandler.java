@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
 
-        // Determina o status HTTP baseado na mensagem
+        
         if (ex.getMessage() != null && ex.getMessage().contains("não encontrad")) {
             status = HttpStatus.NOT_FOUND;
         } else if (ex.getMessage() != null && ex.getMessage().contains("já cadastrado")) {

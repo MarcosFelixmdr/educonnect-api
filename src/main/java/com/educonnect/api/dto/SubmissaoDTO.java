@@ -8,8 +8,6 @@ import java.util.Map;
 public class SubmissaoDTO {
     private Long provaId;
     private Long aprendizId;
-    /**
-     * Key: questaoId, Value: resposta do aluno ("A", "B", "C" ou "D")
-     */
+    
     private Map<Long, String> respostas;
 }

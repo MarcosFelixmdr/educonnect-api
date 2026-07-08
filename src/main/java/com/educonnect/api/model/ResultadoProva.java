@@ -33,15 +33,11 @@ public class ResultadoProva {
     @Column(name = "aprendiz_id", nullable = false)
     private Long aprendizId;
 
-    /**
-     * Número de questões corretas (0–10)
-     */
+    
     @Column(nullable = false)
     private Integer acertos;
 
-    /**
-     * Aprovado se acertos >= 6
-     */
+    
     @Column(nullable = false)
     private Boolean aprovado;
 

@@ -39,7 +39,7 @@ public class ResultadoProvaService {
 
         boolean aprovado = acertos >= ACERTOS_MINIMOS;
 
-        // Upsert: delete old result and save new one (allows retries)
+        
         repository.findByProvaIdAndAprendizId(dto.getProvaId(), dto.getAprendizId())
                 .ifPresent(r -> repository.deleteById(r.getId()));
 

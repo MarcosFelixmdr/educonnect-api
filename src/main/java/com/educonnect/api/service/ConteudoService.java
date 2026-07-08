@@ -38,6 +38,7 @@ public class ConteudoService {
                 .titulo(dto.getTitulo())
                 .descricao(dto.getDescricao())
                 .videoUrl(dto.getVideoUrl())
+                .materialUrl(dto.getMaterialUrl())
                 .ordem(dto.getOrdem() != null ? dto.getOrdem() : 0)
                 .curso(curso)
                 .build();
@@ -52,6 +53,7 @@ public class ConteudoService {
         conteudo.setTitulo(dto.getTitulo());
         conteudo.setDescricao(dto.getDescricao());
         conteudo.setVideoUrl(dto.getVideoUrl());
+        conteudo.setMaterialUrl(dto.getMaterialUrl());
         conteudo.setOrdem(dto.getOrdem() != null ? dto.getOrdem() : conteudo.getOrdem());
 
         return toDTO(conteudoRepository.save(conteudo));
@@ -70,6 +72,7 @@ public class ConteudoService {
                 .titulo(conteudo.getTitulo())
                 .descricao(conteudo.getDescricao())
                 .videoUrl(conteudo.getVideoUrl())
+                .materialUrl(conteudo.getMaterialUrl())
                 .ordem(conteudo.getOrdem())
                 .cursoId(conteudo.getCurso().getId())
                 .cursoTitulo(conteudo.getCurso().getTitulo())

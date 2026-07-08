@@ -39,7 +39,7 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
 
-        // Verifica se email mudou e se já existe
+        
         if (!usuario.getEmail().equals(dto.getEmail()) && usuarioRepository.existsByEmail(dto.getEmail())) {
             throw new RuntimeException("Email já cadastrado: " + dto.getEmail());
         }
