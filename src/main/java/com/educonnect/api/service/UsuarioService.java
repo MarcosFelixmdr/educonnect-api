@@ -49,7 +49,7 @@ public class UsuarioService {
         usuario.setTipo(dto.getTipo());
         usuario.setBio(dto.getBio());
         usuario.setAreaAtuacao(dto.getAreaAtuacao());
-        usuario.setFoto(dto.getFoto());
+        usuario.setFoto(dto.getFoto() != null && !dto.getFoto().isBlank() ? dto.getFoto() : null);
         if (dto.getSenha() != null && !dto.getSenha().isBlank()) {
             usuario.setSenha(dto.getSenha());
         }
@@ -95,7 +95,7 @@ public class UsuarioService {
                 .tipo(dto.getTipo())
                 .bio(dto.getBio())
                 .areaAtuacao(dto.getAreaAtuacao())
-                .foto(dto.getFoto())
+                .foto(dto.getFoto() != null && !dto.getFoto().isBlank() ? dto.getFoto() : null)
                 .senha(dto.getSenha() != null ? dto.getSenha() : "123456")
                 .build();
     }
