@@ -42,9 +42,13 @@ public class Matricula {
     @Builder.Default
     private StatusMatricula status = StatusMatricula.PENDENTE;
 
+    @Column(name = "certificado_hash")
+    private String certificadoHash;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
 
     public enum StatusMatricula {
         PENDENTE, ATIVA, CONCLUIDA, CANCELADA

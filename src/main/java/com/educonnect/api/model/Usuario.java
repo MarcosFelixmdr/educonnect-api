@@ -48,6 +48,11 @@ public class Usuario {
     @Column
     private String senha;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer xp = 0;
+
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

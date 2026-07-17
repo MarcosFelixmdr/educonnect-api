@@ -42,4 +42,10 @@ public class MatriculaController {
         matriculaService.deletar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/validar/{hash}")
+    public ResponseEntity<MatriculaDTO> buscarPorCertificadoHash(@PathVariable String hash) {
+        return ResponseEntity.ok(matriculaService.buscarPorCertificadoHash(hash));
+    }
 }
+

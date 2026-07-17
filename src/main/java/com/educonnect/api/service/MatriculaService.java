@@ -21,6 +21,7 @@ public class MatriculaService {
     private final MatriculaRepository matriculaRepository;
     private final UsuarioRepository usuarioRepository;
     private final CursoRepository cursoRepository;
+    private final ConquistaService conquistaService;
 
     public List<MatriculaDTO> listarTodos() {
         return matriculaRepository.findAll().stream()
@@ -52,7 +53,21 @@ public class MatriculaService {
                 .status(Matricula.StatusMatricula.PENDENTE)
                 .build();
 
-        return toDTO(matriculaRepository.save(matricula));
+        Matricula saved = matriculaRepository.save(matricula);
+        
+        try {
+            conquistaService.concederSeNaoExistir(
+                    aprendiz.getId(),
+                    "PRIMEIRO_PASSO",
+                    "Primeiro Passo",
+                    "Realizou sua matrícula em um curso da plataforma.",
+                    "🎒"
+            );
+        } catch (Exception e) {
+            System.err.println("Erro ao conceder conquista PRIMEIRO_PASSO: " + e.getMessage());
+        }
+
+        return toDTO(saved);
     }
 
     public MatriculaDTO atualizar(Long id, MatriculaDTO dto) {
@@ -61,6 +76,23 @@ public class MatriculaService {
 
         if (dto.getStatus() != null) {
             matricula.setStatus(dto.getStatus());
+            
+            if (dto.getStatus() == Matricula.StatusMatricula.CONCLUIDA) {
+                if (matricula.getCertificadoHash() == null || matricula.getCertificadoHash().isEmpty()) {
+                    matricula.setCertificadoHash(java.util.UUID.randomUUID().toString());
+                }
+                try {
+                    conquistaService.concederSeNaoExistir(
+                            matricula.getAprendiz().getId(),
+                            "CONCLUDENTE",
+                            "Formado!",
+                            "Concluiu seu primeiro curso e emitiu o certificado.",
+                            "🎓"
+                    );
+                } catch (Exception e) {
+                    System.err.println("Erro ao conceder conquista CONCLUDENTE: " + e.getMessage());
+                }
+            }
         }
 
         if (dto.getCursoId() != null) {
@@ -79,6 +111,13 @@ public class MatriculaService {
         matriculaRepository.deleteById(id);
     }
 
+    public MatriculaDTO buscarPorCertificadoHash(String hash) {
+        Matricula matricula = matriculaRepository.findByCertificadoHash(hash)
+                .orElseThrow(() -> new RuntimeException("Certificado não encontrado com o hash informado."));
+        return toDTO(matricula);
+    }
+
+
     private MatriculaDTO toDTO(Matricula matricula) {
         return MatriculaDTO.builder()
                 .id(matricula.getId())
@@ -88,7 +127,9 @@ public class MatriculaService {
                 .cursoTitulo(matricula.getCurso().getTitulo())
                 .dataInscricao(matricula.getDataInscricao())
                 .status(matricula.getStatus())
+                .certificadoHash(matricula.getCertificadoHash())
                 .createdAt(matricula.getCreatedAt())
                 .build();
     }
 }
+

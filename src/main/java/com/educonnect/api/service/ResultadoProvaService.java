@@ -5,6 +5,7 @@ import com.educonnect.api.model.Questao;
 import com.educonnect.api.model.ResultadoProva;
 import com.educonnect.api.repository.QuestaoRepository;
 import com.educonnect.api.repository.ResultadoProvaRepository;
+import com.educonnect.api.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public class ResultadoProvaService {
 
     private final ResultadoProvaRepository repository;
     private final QuestaoRepository questaoRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final ConquistaService conquistaService;
 
     public Optional<ResultadoProva> buscarResultado(Long provaId, Long aprendizId) {
         return repository.findByProvaIdAndAprendizId(provaId, aprendizId);
@@ -39,7 +42,6 @@ public class ResultadoProvaService {
 
         boolean aprovado = acertos >= ACERTOS_MINIMOS;
 
-        
         repository.findByProvaIdAndAprendizId(dto.getProvaId(), dto.getAprendizId())
                 .ifPresent(r -> repository.deleteById(r.getId()));
 
@@ -50,6 +52,29 @@ public class ResultadoProvaService {
                 .aprovado(aprovado)
                 .build();
 
-        return repository.save(resultado);
+        ResultadoProva saved = repository.save(resultado);
+
+        if (aprovado) {
+            usuarioRepository.findById(dto.getAprendizId()).ifPresent(u -> {
+                u.setXp(u.getXp() + 100);
+                usuarioRepository.save(u);
+            });
+
+            if (acertos == questoes.size() && questoes.size() > 0) {
+                try {
+                    conquistaService.concederSeNaoExistir(
+                            dto.getAprendizId(),
+                            "GENIO",
+                            "Mente Brilhante",
+                            "Acertou 100% das questões de uma avaliação.",
+                            "🧠"
+                    );
+                } catch (Exception e) {
+                    System.err.println("Erro ao conceder conquista GENIO: " + e.getMessage());
+                }
+            }
+        }
+
+        return saved;
     }
 }

@@ -34,4 +34,7 @@ public class UsuarioDTO {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
+
+    private Integer xp;
 }
+

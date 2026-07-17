@@ -85,6 +85,7 @@ public class UsuarioService {
                 .areaAtuacao(usuario.getAreaAtuacao())
                 .foto(usuario.getFoto())
                 .senha(usuario.getSenha())
+                .xp(usuario.getXp())
                 .build();
     }
 
@@ -97,6 +98,8 @@ public class UsuarioService {
                 .areaAtuacao(dto.getAreaAtuacao())
                 .foto(dto.getFoto() != null && !dto.getFoto().isBlank() ? dto.getFoto() : null)
                 .senha(dto.getSenha() != null ? dto.getSenha() : "123456")
+                .xp(dto.getXp() != null ? dto.getXp() : 0)
                 .build();
     }
 }
+

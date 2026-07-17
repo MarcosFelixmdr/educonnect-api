@@ -29,5 +29,7 @@ public class MatriculaDTO {
     private String cursoTitulo;
     private LocalDate dataInscricao;
     private Matricula.StatusMatricula status;
+    private String certificadoHash;
     private LocalDateTime createdAt;
 }
+

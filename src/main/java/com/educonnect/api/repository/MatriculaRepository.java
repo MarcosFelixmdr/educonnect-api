@@ -11,4 +11,6 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
     List<Matricula> findByAprendizId(Long aprendizId);
     List<Matricula> findByCursoId(Long cursoId);
     List<Matricula> findByStatus(Matricula.StatusMatricula status);
+    java.util.Optional<Matricula> findByCertificadoHash(String hash);
 }
+

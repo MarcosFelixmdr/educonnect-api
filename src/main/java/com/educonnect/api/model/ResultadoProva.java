@@ -11,10 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(
-    name = "resultados_prova",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"prova_id", "aprendiz_id"})
-)
+@Table(name = "resultados_prova", uniqueConstraints = @UniqueConstraint(columnNames = { "prova_id", "aprendiz_id" }))
 @Data
 @Builder
 @NoArgsConstructor
@@ -33,11 +30,9 @@ public class ResultadoProva {
     @Column(name = "aprendiz_id", nullable = false)
     private Long aprendizId;
 
-    
     @Column(nullable = false)
     private Integer acertos;
 
-    
     @Column(nullable = false)
     private Boolean aprovado;
 
